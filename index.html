@@ -9,15 +9,41 @@
 			color:darkslategray;
 			background-color:lightgray;
 			font-family:'monospace';
-			font-size:1vw;
+			font-size:calc(12px + 1vw + 1vh);
+		}
+		hr {
+			height:100vh;
+		}
+		a, a:hover{
+			text-decoration:none;
+			color:inherit;
+			font-style:inherit;
+			cursor:pointer;
+		}
+		footer{
+			position:absolute;
+			bottom:0;
 		}
 	</style>
 </head>
 <body>
-	<h1>First</h1>
+	<h1>Append</h1>
+	<hr>
+	<h1><a href='#first' id='first'>First</a></h1>
 	<h2>8/4/2023</h2>
 	<p>This is a webpage containing stuff I feel like writing about.
 	Any opinions are my own and aren't shared or endorsed by anyone else.</p>
+	<!--
+	<hr>
+	<h1><a href='#division-considered-harmful' id='division-considered-harmful'>Division Considered Harmful</a></h1>
+	<p>When one thinks of division, they think of long division by hand.
+	When a computer scientist thinks of division, they think of fast binary division performed by a CPU.
+	There is another division, division over numbers in an arbitrary precision arithmetic system.</p>
+	<p>Arbitrary precision arithmetic is the next step up from fast binary arithmetic operators on machine words.
+	Subroutines that perform this arithmetic combine multiple (or an <i>arbitrary</i> amount of) machine words to contain a numerical value which may be larger than what can be held in a single word.
+	The manner in which a CPU performs arithmetic on arbitrary precision numbers is oddly similar to how a person does figures on paper.
+	It simply iterates over all the individual words comprising the whole numerical unit.</p>
+	-->
 </body>
 <footer>
 	<p>This page is Copyright &copy; Daniel Smith, daniel.smith.again@gmail.com</p>
