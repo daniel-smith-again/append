@@ -12,7 +12,7 @@ i	footer{ position:relative; bottom:0; border:none; margin:auto; margin-top:50vh
 </head>
 <body>
 	<h1 style='margin:auto;margin-top:50vh;text-align:center;'>
-		<a href='#lisp-semantics-could-be-better'>Append</a>
+		<a href='#ive-recently-been-saved'>Append</a>
 	</h1>
 	<hr>
 	<h1><a href='#first' id='first'>First</a></h1>
@@ -154,6 +154,65 @@ i	footer{ position:relative; bottom:0; border:none; margin:auto; margin-top:50vh
 	The Lisp we need.
 	The Lisp that we deserve.
 	Remember, dear reader, what you're missing out on.</p>
+	<hr>
+	<h1><a href='#ive-recently-been-saved' id='ive-recently-been-saved'>I've Recently Been Saved</a></h1>
+	<p>I recently installed linux on a new laptop and decided that this time, I really will take the plunge and see just what EMACS is all about.
+	The only othe editor on the system is GNU Ed for mashing dotfiles.
+	Let me tell you, I have seen the light.
+	I've been saved.
+	EMACS is a very convenient text editor.</p>
+	<p>It's very ironic that making the transition to EMACS would highlight the good points of all the other editors that I left behind.
+	There's a very good and sane reason that I keep Ed on every system I use.
+	Editing with it is comfortable.
+	This is why I took the time to learn Vi/Vim's nonsensical keyboard shortcuts.
+	With command-mode editors, and especially with Ed, I never lift my hands from the same spot. 
+	Not once for an entire session.
+	The same positioning I use for typing text on a keyboard is the position my hands remain in for entering commands.</p>
+	<p>Other editors interrupt this flow entirely.
+	Other editors with more features disrupt this flow.
+	With Vi/Vim and Nano, I have to move my hand to access the meta key.
+	And even other editors have no flow at all.
+	EMACS, Atom, and VS Code require you to use your entire keyboard and even your mouse.
+	This kind of text editing is powerful, but slow.
+	And command-based editors let you do the same things, but much faster.</p>
+	<p>EMACS especially has no excuse for how inconvenient it is to enter commands.
+	It's heavily a mode-based editor. 
+	Even commands traverse multiple modes in the sense that you may have to engage multiple key bindings which are sequentially dependent on each other.
+	But the way EMACS achieves this is by having two separate modifier keys, <i>and</i> the escape key.
+	And you may have to use any combination of these to engage the specific editor function you're looking for.</p>
+	<p>If you approach with the understanding that 99% of EMACS' functionality is implemented by an interpreted lisp, then special key modifiers make sense.
+	They preserve the purity of relying on a single language, EMACS Lisp, to do everything instead of an editing DSL like command-based editors.
+	The problem is that a text editor, even with extensions, should never be something I have to approach with understanding.
+	That's too much of an inconvenience.
+	I'll chose EMACS over Vi/Vim, but I'll always have Ed in my back pocket.</p>
+	<p>But why did I even decide to switch if EMACS is such a bother to use?
+	Because command based editors turned out to be even more of a bother.
+	Vi, Vim, Nano, and Ed are limited, stupid, and obtuse.
+	Their key bindings make no sense, and their command language is powerful, but much too hard to use in real life.
+	This is why I switched.
+	If all it comes down to is memorizing the right order of keys to press, then I get much more bang for my buck with EMACS.
+	A little practice, and I have a text editor, a file manager, a language interpreter, and whatever other function a mode exists for.
+	Nobody else is quite as extensible.</p>
+	<p>Here's what makes me wish I wasn't saved.
+	For as terrible as the other editors are, I've now doomed myself to memorization hell.
+	This is what took me so long to make the transition to begin with.
+	Just when you start emacs, it pops up with the innavigable home screen, which accepts different commands than the actual file editor mode.
+	If you want to learn some of the commands, you have to slog through the tutorial mode.
+	I naively tried to <code>man emacs</code> once and was promptly told by the man page to use texinfo.
+	I tried that and it was nearly the identical documentation to the tutorial mode I was trying to circumvent.</p>
+	<p>So I've been saved.
+	Saved in the sense that I finally have worked up the resolve to code my own editor environment.
+	This transition to EMACS was the final straw.
+	You are all terrible.
+	I will choose the path less traveled.</p>
+	<p>And I'm not talking about a project like NeoVim or Helix.
+	I mean a truly different editor.
+	It will be a mode-based rendering engine that supports every standard MIME type.
+	It will support <i>all</i> keyboard input, not just what worked 500 years ago with the VT-100.
+	Modes will work via an interpreted scripting language which will <i>not be javascript <b>and especially not lua</b></i>.
+	It will have a <i>sane</i> editing mode based around functions in the scripting language.
+	Obscure and nonsensical key bindings can be set by individual users, but <i>everyone</i> can enter the name for the editing function they want to perform.
+	And the best part is, just like Internet Explorer, EMACS is the perfect tool to use for superceding it.</p>
 	<hr>
 </body>
 <footer>
