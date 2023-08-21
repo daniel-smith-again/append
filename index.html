@@ -12,7 +12,7 @@ i	footer{ position:relative; bottom:0; border:none; margin:auto; margin-top:50vh
 </head>
 <body>
 	<h1 style='margin:auto;margin-top:50vh;text-align:center;'>
-		<a href='#ive-recently-been-saved'>Append</a>
+		<a href='#linux-is-bad-again'>Append</a>
 	</h1>
 	<hr>
 	<h1><a href='#first' id='first'>First</a></h1>
@@ -212,7 +212,40 @@ i	footer{ position:relative; bottom:0; border:none; margin:auto; margin-top:50vh
 	It will have a <i>sane</i> editing mode based around functions in the scripting language.
 	Obscure and nonsensical key bindings can be set by individual users, but <i>everyone</i> can enter the name for the editing function they want to perform.
 	And the best part is, just like Internet Explorer, EMACS is the perfect tool to use for superceding it.</p>
+	<p>Just kidding, I'm still using VS Code</p>
 	<hr>
+	<h1><a href='#linux-is-bad-again' id='linux-is-bad-again'>Linux Is Bad Again</a></h1>
+	<p>Every so often, I'm reminded that the unspoken true purpose of Linux is to spin up headless virtual machines for Something-as-a-Service vendors.
+	It's a particularly painful reminder since I <i>try</i> to use Linux as my personal desktop.
+	My hobbies all center around tech and software, so using Linux all the time isn't hard. 
+	Most other people using Linux like that are also doing things with tech and software so all the tools we make are for this purpose.</p>
+	<p>But lately, Linux has started sucking again.
+	More than it usually does.
+	Thanks to GNOME (no surprises here).
+	This comes hot on the heels of blessing Wayland as <b>the</b> display server and causing mass panic as the majority of users using X11 felt personally deprecated.
+	GNOME has now blessed something called "libadwaita" as <i>the</i> UI library.
+	Again, causing mass panic as the majority of vanilla GTK users feel personally deprecated.</p>
+	<p>I think these are all actually good decisions.
+	Thanks to GNOME going above and beyond to support Wayland, I no longer have to use X11 with screen tearing.
+	Even my Nvidia GPU works.
+	Thanks to libadwaita, I no longer have random broken UI components on apps that don't have the manpower to compensate for misbehaving user themes.
+	Additionally, I can write GTK apps assuming a single common environment (libc, glib, and now libadwaita) without having to add all the normal edge cases for spicier user configurations.
+	Microsoft has had Win32 since Windows NT in 1993.
+	If I made an app in 1993, I can run it now.
+	On Windows 11.
+	What took Linux so long?
+	(This may be unfair since Xorg was already standard from the 80's right up until GTK and QT became popular.</p>
+	<p>Now, dear reader, you may want to ask me how exactly does Linux suck now that it seemingly sucks the least it ever has in the last twenty years.
+	That's easy.
+	It's because <i>nobody is using all this great new stuff GNOME has.</i>
+	Most devs gave up after the switch to Wayland and decided that their app will just depend on XWayland to function forever.
+	Other projects managed to catch up to Wayland, then called it good because GTK/QT will just figure out the rest.
+	The result is pure chaos.
+	Now an app may be looking for resources via X11, XWayland, Wayland, GNOME, GTK3, GTK4, libadwaita, oh and don't forget, it could be using QT instead.
+	Good luck figuring out which one an app needs.</p>
+	<p>Eventually, everyone will agree on a reasonable default that we can all assume.
+	I just hope I will live to see that day.</p>
+	<hr>	  
 </body>
 <footer>
 	<p>This page is Copyright &copy; Daniel Smith, daniel.smith.again@gmail.com</p>
