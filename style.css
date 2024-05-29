@@ -1,0 +1,8 @@
+body{max-width:100ch;width:62%;min-width:40ch;margin:auto;color:black;background-color:white;font-family:serif;font-size:calc((16px + 1vw + 1vh) / 1.5);}
+code{color:dimgray}
+hr{height:0;margin:auto;margin-top:50vh;margin-bottom:3ch;}
+a, a:hover{text-decoration:underline;color:inherit;font-style:inherit;cursor:pointer;border-radius:0.5ch;}
+a:hover{background-color:dimgray;}
+h1 a{text-decoration:none;}
+article{max-height: 69vh;overflow-y:auto;border-radius:0.5ch;padding:1ch; box-shadow:3px 3px 10px black inset;}
+footer{ position:relative; bottom:0; border:none; margin:auto; margin-top:50vh; text-align:center; }
