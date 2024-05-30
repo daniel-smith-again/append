@@ -44,7 +44,8 @@ function OpenArticle(e) {
     document.getElementById('Title').innerHTML = 'append';
   }
   else {
-    var path = url.origin + '/' + url.hash.substring(1) + '.html'
+    //var path = url.origin + '/' + url.hash.substring(1) + '.html'
+    var path = url.hash.substring(1) + '.html'
     var request = new XMLHttpRequest()
     request.open('GET', path, true)
     request.onload = (doc) => {
