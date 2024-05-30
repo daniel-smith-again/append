@@ -1,378 +1,69 @@
 <!DOCTYPE html>
 <head>
-<meta charset='utf-8'>
+<meta charset="utf-8">
 <title>append</title>
-<link href="style.css" rel="stylesheet" />
+<link href="style.css" rel="stylesheet"/>
+<script>
+var Articles = [
+  ['About', 'about'],
+  ['Too Much Math', 'too-much-math'],
+  ['When I Hear "X In Haskell"', 'when-i-hear-x-in-haskell']
+]
+</script>
 </head>
 <body>
-<h1 style='margin:auto;margin-top:50vh;text-align:center;'>
-<a href='#too-much-math'>Append</a>
+<h1 style='margin:auto;text-align:center;'>
+<a onclick="SelectArticle()" id="Title">Append</a>
 </h1>
-<hr>
-<h1><a href='#first' id='first'>First</a></h1>
-<h2>8/4/2023</h2>
-<article>
-<p>This is a webpage containing stuff I feel like writing about.
-Any opinions are my own and aren't shared or endorsed by anyone else.</p>
+<div id="ArticleList">
+</div>
+<article id="ArticleContainer">
+<script>
+var Container = document.getElementById('ArticleList');
+(() => {
+  console.log('Container Loaded')
+  Container.replaceChildren()
+  Articles.map(a => {
+    var e = document.createElement('a')
+    e.href = '#' + a[1]
+    e.addEventListener('click', (e) => OpenArticle(e))
+    e.appendChild(document.createTextNode(a[0]))
+    Container.appendChild(e)
+  })
+})()
+function SelectArticle() {
+  document.getElementById('ArticleList').style.display = "flex";
+}
+
+function OpenArticle(e) {
+  console.log(e)
+  var url = new URL(document.location)
+  console.log(url)
+  if (url.hash == '') {
+    document.getElementById('ArticleContainer').style.display = 'none';
+    document.getElementById('Title').innerHTML = 'append';
+  }
+  else {
+    var path = url.origin + '/' + url.hash.substring(1) + '.html'
+    var request = new XMLHttpRequest()
+    request.open('GET', path, true)
+    request.onload = (doc) => {
+      var article = document.getElementById('ArticleContainer')
+      article.replaceChildren()
+      article.innerHTML = request.responseText
+      article.style.display = 'block';
+      var link = document.querySelectorAll("a[href='" + url.hash + "']")
+      document.getElementById('Title').innerHTML = link[0].innerHTML;
+    }
+    request.send()
+  }
+  document.getElementById('ArticleList').style.display = 'none';
+}
+window.onhashchange = OpenArticle
+OpenArticle()
+</script>
 </article>
-<hr>
-<h1><a href='#the-worst-thing' id='the-worst-thing'>The Worst</a></h1>
-<article>
-<p>thing since sliced bread is web articles that display progress bars marking your progress through the article. 
-I would prefer to leave myself alone to read in peace without breathing down my own neck.
-I finally understand the meaning of the meme verb "consoom".</p>
-</article>
-<hr>
-<h1><a href='#lisp-semantics-could-be-better' id='lisp-semantics-could-be-better'>Lisp Semantics Could Be Better</a></h1>
-<article>
-<p>Lisp has been at the forefront of development for every new paradigm in programming languages. 
-If it wasn't the origin of a specific feature, then it was the environment used to test it. 
-At the same time, Lisp is the second oldest programming language. However, that statement is a slight misnomer.</p>
-<p>There has not been a single cannonical Lisp language which has persisted throughout time. 
-(One could make the case that Common Lisp<a href="http://www.lispworks.com/documentation/HyperSpec/Body/01_ab.htm" target="_blank"><sup>*</sup></a> is the most accurate Lisp, but concensus is not the same as canonnicity.)
-Rather, there has been a multitude of Lisps which all manifest the same overall structure, but vary wildly.<a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)#Timeline" target="_blank"><sup>*</sup></a>
-Observe the variances in the ways modern Lisp languages function.
-Each language has fundamental differences in their semantics which are all expressed in the same Uniform-And-Homoiconic-Syntax&trade;.</p>
-<p>Here there lives a most persnickity weakness. 
-Lisp is expected to be, and touted as, <i>the</i> groundbreaking programming tool which expands minds, puts hair on chests, and launches academic careers to the top of the Ivory Tower...<br>
-Except that it isn't.</p>
-<p>If one wants to learn about Functional Programming, Haskell is a better choice.
-If one desires to architect with objects, Smalltalk is best.<br>
-For logic, Prolog.<br>
-For matricies and arrays, APL.<br>
-For dynamic typing, Smalltalk again.<br>
-For static typing, Haskell.<br>
-For imperative programming, C.<br>
-For concurrency, Go.<br>
-For garbage collection, D.<br>
-For recursion, Scheme (finally, a Lisp!).<br>
-For extensibility, Forth (oh dear reader, you thought I'd mention macros didn't you...)</p>
-<p>Lisp has lost it's mind-expanding-drug status. 
-Other languages have matured and are far more suitable for different things.
-That's all well and good, for that's the nature of human expression.
-I can hear the protests already that Lisps macro system enables all of everything to be expressed through DSL's and other wonderful abstractions.
-This is simply no longer true.
-The CLOS does not have the same power as basic Smalltalk without losing what little berevity it has.
-Most lisp implementations provide concurrency as an afterthought with very little of the expressive power of Lisp spent on the semantics.
-Lisps are all still dynamically typed in the worst sense of the term, even though there's no reason at all preventing eval from verifying a form it's passed.</p>
-<p>So by now, dear reader, you must have written me off as a lousy crank, just like everyone else today who doesn't pay proper respects to the One True Language&trade;.
-On the contrary, I have been sent here as a prophet, to write this article shining light on the golden path which future Lisp implementations can follow.
-And I mean that with every bit of conceit intended seeing how Lisp users have highroaded everyone for the last 50 years. (Really, the sheer nerve, and with stop the world GC!)
-Those of you struggling in the dark, fear not, for who really can know better until they've experienced it<a href="http://www.paulgraham.com/avg.html" target="_blank"><sup>*</sup></a>.</p>
-<h2>The Solution</h2>
-<p>Allow me to elucidate, here's what a real Lisp would look like if Lisp were Lisp enough to Lisp-up to the task.
-The Lisp language, all things considered, actually refers to a very narrow corner of what a programmming language is. 
-For the rest of this article I ask that you consider Lisp for what it is, a symbolic rewrite system.
-It's true that all existing Lisps fit that description. 
-I mean that LISP Lisp is <b>only</b> a symbolic rewrite system.
-The only operations in this language are the ones that manipulate syntax.
-No functions, no vectors, strings, arrays, objects, lammbdas, etc...
-Just LISP 0.1.
-What does eval do? 
-Expand macros and give you a normal form.</p>
-<p>Lisp just being Lisp is a tarpit though (a tarpit with TCO that is).
-Now I have The Diverging, Untyped, Lambda Calculus via the macro system.
-This is no good, so we add a static type system. 
-Which kind of type system? A static one of course. 
-One with lots of wibbly-wobbly theory stuff that I'll never read or use. 
-(Maybe even an inconsistent shoddy formalization!)
-The only thing we have to type is forms, but this leads to an interesting property.
-The reduction of a form is not decided by the first symbol, but by the type of the form.
-Rather than prefix notation, you have whatever-you-like-fixity as long as you put it in a closed pair of braces.
-I can hear you say, dear reader, "but Prophet of the Golden Lisp, isn't that string types?!"
-Yes, its string-typing with sequences of symbols, what of it?
-Now that we have statically verified types, we have a reasonable amount of decidability such that we can avoid divergence where it isn't wanted.</p>
-<p>The next interesting property is that lisp forms are still organized into a tree structure.
-This is very convenient because two forms that are at the same level can be evaluated at the same time without adverse effects.
-It helps that the Lisp that we're dealing with now is purely functional as macro expansion is referentially transparent.
-Closures let us program using whatever concurrent process communication paradigm we want.</p>
-<p>Next up is logic. 
-Boolean values are missing from this language.
-However, functional logic programming normally uses success and failure rather than boolean values. 
-Adding a null value should do the trick.
-Now we have enough to create conditional evaluation as a macro which expands to the second or third form depending on whether the first form expands to something, or null.
-Another facet of logic programming is the ability to perform unification on variables according some statement.
-This is already possible with the macro systems' ability to inspect forms, create forms, and consequently unify two forms. (Naturally all according to some unification algorithm.<a href="https://kevincrawfordknight.github.io/papers/unification-knight.pdf" target="_blank"><sup>*</sup></a>)</p>
-<p>Now we have concurrent, functional, logic, objects... programming.
-That sounds more like the pinnacle of all language development.
-More like a LISP.
-And without a single DSL, extension, built-in macro, or primitive function.
-</p>
-<p>Of course now we can get much fancier with things like data structures.
-A quoted list of symbols sure seems like a record with a little squinting. 
-We had structural typing two paragraphs ago since all forms are "stringly" typed.
-Now we have structurally typed records using quoted forms.
-Forms are still our only actual datatype anyway so this works.
-However, we need some primitives for working with forms-as-structures.
-Set algebra is a good start. 
-You can add, subtract, multiply (power set), and divide (relative complement) quoted forms.
-What if one wishes to decompose a form?
-Elements of a quoted form (which are more forms of course) can be selected by either indexed position or type (set division using an element).</p>
-<p>I mentioned the ability to index forms back there.
-That sounds like numbers.
-It is numbers because this Lisp should naturally have numbers.
-Whole numbers of course.
-For the academics, a number is the cardinality of a quoted form.
-For the pragmatists, you can just read an all-digits symbol as a number.</p>
-<p>Let's take stock of what monster this rant has described so far.
-We have a Lisp in all its homoiconic, uniform glory.
-It has whole numbers, indexed multisets, general recursion, static typing (of some sort), concurrency, logic, and object orientation (as a poor man's closure<a href="http://wiki.c2.com/?ClosuresAndObjectsAreEquivalent" target="_blank"><sup>*</sup></a>).
-That's quite a lot.
-It either has every cool new idea, or you can make the cool new idea as a macro.
-This is the kind of Lisp that would <i>really</i> do some mind expanding.
-There's enough here to make coroutines, differential equation solvers, algebraic effect handlers, dynamic bindings, CLOS, meta-objects, etc...
-Remember, dear reader, how short this article is.
-Burn it into your minds what could be and how simple it really is.</p>
-<h2>If I Must...</h2>
-<p>I suppose I should address the static typing that I conveniently gave no details on. 
-Those of you who are academically inclined have probably stopped reading by now.
-Types are actually quite simple to implement in this language as they are list types.
-All you need is a "recognizer" macro which looks at a form and returns its identity if the form is according to a certain notion of a type, or else returns null.
-The type assertion will then expand to the object of the assertion being handed to the macro which guarantees this assertion.
-Depending on the timing of where this recognizer macro is expanded, one has full-unrestricted dependent typing in all its terrifying expressiveness.</p>
-<p>Another sticky part that I smooth over is the fact that this Lisp I'm describing still requires GC... 
-Well, not exactly.
-See, this Lisp only allows you to bind stuff as input to the macro.
-Even then, you can only have a single binding per-macro: the form that the macro is expanding.
-There's no concept of assignment and combined with referential transparency, a single macro expansion can be performed in a deterministic constant space.
-Poof, now all resources are tied to lexical scope and GC is no longer required.
-Structures no longer require GC either since there's no way for a structure to consume more space once it's been constructed.
-Technically, you could even <i>sinfully</i> swap elements in-place (seriously, who's the math-head jerk who said this was bad?) if you maintain that each form resides in it's "own space" rather than staying serialized together in memory.
-Even closures are space-constant since creating and binding one is <i>still</i> controlled by a lexical extent.
-Even <i>x, y, and z</i> are space-constant since... you get the idea.</p>
-<p>One final interesting point is that there is no function abstraction or application in this language, or even first-class functions. 
-I make the audacious posit that they are not necessary since you have a complete rewrite system already, which corresponds almost directly to the Lambda Calculus.
-One key part I should settle here is that macros in <i>this</i> Lisp are not global, but rather lexically scoped to the macro definition in which they were created.
-It follows that closures are formed by the macro definitions which were lexically visible to a form where it was created in the body of another macro.
-Variable binding, functions, and all other evaluation-level reductions are simulated by macro expansion of forms featuring those names or in-place constructions.
-Macros are also first class since there's nothing stopping you from creating a macro that expands the macro definition form and consequently folds the known universe in on itself.
-If this makes you feel lost and slightly afraid, I wasn't addressing <i>you</i> anyways, and this <a href="https://us.metamath.org/" target="_blank" style="text-decoration: underline;">link</a> will surely make it worse.</p>
-<p>If any of this sounds good to you, please go make an interpreter for it.
-If any of this sounds vague to you, please go make an interpreter which resolves inconsistencies and spites me in some way.
-The entire point of this article is that it should be and <i>is</i> a feasible task to make a better Lisp.
-The Lisp we need.
-The Lisp that we deserve.
-Remember, dear reader, what you're missing out on.</p>
-</article>
-<hr>
-<h1><a href='#ive-recently-been-saved' id='ive-recently-been-saved'>I've Recently Been Saved</a></h1>
-<article>
-<p>I recently installed linux on a new laptop and decided that this time, I really will take the plunge and see just what EMACS is all about.
-The only othe editor on the system is GNU Ed for mashing dotfiles.
-Let me tell you, I have seen the light.
-I've been saved.
-EMACS is a very convenient text editor.</p>
-<p>It's very ironic that making the transition to EMACS would highlight the good points of all the other editors that I left behind.
-There's a very good and sane reason that I keep Ed on every system I use.
-Editing with it is comfortable.
-This is why I took the time to learn Vi/Vim's nonsensical keyboard shortcuts.
-With command-mode editors, and especially with Ed, I never lift my hands from the same spot. 
-Not once for an entire session.
-The same positioning I use for typing text on a keyboard is the position my hands remain in for entering commands.</p>
-<p>Other editors with more features disrupt this flow.
-With Vi/Vim and Nano, I have to move my hand to access the meta key.
-And even other editors have no flow at all.
-EMACS, Atom, and VS Code require you to use your entire keyboard and even your mouse.
-This kind of text editing is powerful, but slow.
-And command-based editors let you do the same things, but much faster.</p>
-<p>EMACS especially has no excuse for how inconvenient it is to enter commands.
-It's heavily a mode-based editor. 
-Even commands traverse multiple modes in the sense that you may have to engage multiple key bindings which are sequentially dependent on each other.
-But the way EMACS achieves this is by having two separate modifier keys, <i>and</i> the escape key.
-And you may have to use any combination of these to engage the specific editor function you're looking for.</p>
-<p>If you approach with the understanding that 99% of EMACS' functionality is implemented by an interpreted lisp, then special key modifiers make sense.
-They preserve the purity of relying on a single language, EMACS Lisp, to do everything instead of an editing DSL like command-based editors.
-The problem is that a text editor, even with extensions, should never be something I have to approach with understanding.
-That's too much of an inconvenience.
-I'll chose EMACS over Vi/Vim, but I'll always have Ed in my back pocket.</p>
-<p>But why did I even decide to switch if EMACS is such a bother to use?
-Because command based editors turned out to be even more of a bother.
-Vi, Vim, Nano, and Ed are limited, stupid, and obtuse.
-Their key bindings make no sense, and their command language is powerful, but much too hard to use in real life.
-This is why I switched.
-If all it comes down to is memorizing the right order of keys to press, then I get much more bang for my buck with EMACS.
-A little practice, and I have a text editor, a file manager, a language interpreter, and whatever other function a mode exists for.
-Nobody else is quite as extensible.</p>
-<p>Here's what makes me wish I wasn't saved.
-For as terrible as the other editors are, I've now doomed myself to memorization hell.
-This is what took me so long to make the transition to begin with.
-Just when you start emacs, it pops up with the innavigable home screen, which accepts different commands than the actual file editor mode.
-If you want to learn some of the commands, you have to slog through the tutorial mode.
-I naively tried to <code>man emacs</code> once and was promptly told by the man page to use texinfo.
-I tried that and it was nearly the identical documentation to the tutorial mode I was trying to circumvent.</p>
-<p>So I've been saved.
-Saved in the sense that I finally have worked up the resolve to code my own editor environment.
-This transition to EMACS was the final straw.
-You are all terrible.
-I will choose the path less traveled.</p>
-<p>And I'm not talking about a project like NeoVim or Helix.
-I mean a truly different editor.
-It will be a mode-based rendering engine that supports every standard MIME type.
-It will support <i>all</i> keyboard input, not just what worked 500 years ago with the VT-100.
-Modes will work via an interpreted scripting language which will <i>not be javascript <b>and especially not lua</b></i>.
-It will have a <i>sane</i> editing mode based around functions in the scripting language.
-Obscure and nonsensical key bindings can be set by individual users, but <i>everyone</i> can enter the name for the editing function they want to perform.
-And the best part is, just like Internet Explorer, EMACS is the perfect tool to use for superceding it.</p>
-<p>Just kidding, I'm still using VS Code</p>
-</article>
-<hr>
-<h1><a href='#linux-is-bad-again' id='linux-is-bad-again'>Linux Is Bad Again</a></h1>
-<article>
-<p>Every so often, I'm reminded that the unspoken true purpose of Linux is to spin up headless virtual machines for Something-as-a-Service vendors.
-It's a particularly painful reminder since I <i>try</i> to use Linux as my personal desktop.
-My hobbies all center around tech and software, so using Linux all the time isn't hard. 
-Most other people using Linux like that are also doing things with tech and software so all the tools we make are for this purpose.</p>
-<p>But lately, Linux has started sucking again.
-More than it usually does.
-Thanks to GNOME (no surprises here).
-This comes hot on the heels of blessing Wayland as <b>the</b> display server and causing mass panic as the majority of users using X11 felt personally deprecated.
-GNOME has now blessed something called "libadwaita" as <i>the</i> UI library.
-Again, causing mass panic as the majority of vanilla GTK users feel personally deprecated.</p>
-<p>I think these are all actually good decisions.
-Thanks to GNOME going above and beyond to support Wayland, I no longer have to use X11 with screen tearing.
-Even my Nvidia GPU works.
-Thanks to libadwaita, I no longer have random broken UI components on apps that don't have the manpower to compensate for misbehaving user themes.
-Additionally, I can write GTK apps assuming a single common environment (libc, glib, and now libadwaita) without having to add all the normal edge cases for spicier user configurations.
-Microsoft has had Win32 since Windows NT in 1993.
-If I made an app in 1993, I can run it now.
-On Windows 11.
-What took Linux so long?
-(This may be unfair since Xorg was already standard from the 80's right up until GTK and QT became popular.</p>
-<p>Now, dear reader, you may want to ask me how exactly does Linux suck now that it seemingly sucks the least it ever has in the last twenty years.
-That's easy.
-It's because <i>nobody is using all this great new stuff GNOME has.</i>
-Most devs gave up after the switch to Wayland and decided that their app will just depend on XWayland to function forever.
-Other projects managed to catch up to Wayland, then called it good because GTK/QT will just figure out the rest.
-The result is pure chaos.
-Now an app may be looking for resources via X11, XWayland, Wayland, GNOME, GTK3, GTK4, libadwaita, oh and don't forget, it could be using QT instead.
-Good luck figuring out which one an app needs.</p>
-<p>Eventually, everyone will agree on a reasonable default that we can all assume.
-I just hope I will live to see that day.</p>
-</article>
-<hr>
-<h1 id="when-i-hear-x-in-haskell"><a href="#when-i-hear-x-in-haskell">When I Hear "Making X in Haskell"</a></h1>
-<article>
-<p>I always think of "downhill biking on a tricycle".</p>
-</article>
-<hr>
-<h1 id="too-much-math"><a href="#too-much-math">Too Much Math: The Manifesto</a></h1>
-<article>
-<p>There's a great amount of irony in the opinion that anything to do with computing and computer science is a form of "math".
-History tells us to attribute computers to mathematicians, but that's not correct.
-Computers were designed only because women were sick of computing figures by hand back when "computer" still referred to "one who computes" (obligatory shout-out to the late, great Ada Lovelace).
-Computing was never mathematical, and for the first forty odd years, computing was treated with disdain by mathemeticians.
-The only reason mathemeticians ever came around is when the Four-Color Theorem was proven by sheer, unstoppable brute force.
-And even then it was another decade before mathematics accepted that the computer wasn't cheating.
-I see no reason now why mathemaical folks should have any business telling us how we should compute.</p>
-<p>This is especially painful in the field of formal verification.
-Indeed, formal verification was a branch of the crazy math niche of determining if a given function over the natural numbers will halt.
-Lots of useful properties were derived from that. 
-Most significantly, that you can't determine if <i>any</i> function will actually halt, only an impractically small subset.
-...Thanks, mathemtatics, now I can sleep soundly at night.</p>
-<p>The modern field of formal verification hasn't gotten much farther.
-The latest advent in theory is the SMT solver: allowing mathemeticians everywhere to determine nondeterminism faster than ever.
-Meanwhile, there's precious little application of verification in computer science.
-Airplanes, space transit, and government secrets are still the only fields.
-It's a running joke now that verification is dismissed by engineers because "a website isn't a rocketship" or "we're not Boeing".
-A good example is the latest and greatest in static verification for computers, a programming language that simply checks that the program doesn't leak or clobber its own data (three guesses what the name of that language is).
-This is weak...</p>
-<p>So what's wrong?
-Why aren't programmers verifying their code?
-Why is there still a frighteningly large movement advocating that we use dynamic programming languages and simply wait for errors to occur in real time?
-Why do statically verified programming langauges suck?
-It's because computer science is still being misled by mathematics.
-When you hear the word "verification", you start to frown and think of all the indeterminate non-halting functions that are out there just waiting for you to slip up.
-That's not what verification is or should be.
-We haven't even begun to verify computer programs.</p>
-<p>I challenge you to think of just one computer program involving complex numbers, sets, or other abstract mathematical structures where it's purpose isn't explicitly to compute those things.
-I'll bet you can't name a single one, because there isn't.
-Arbitrary Precision Arithmetic exists to help mathemeticians do... math.
-Floating point machine types exist to help engineers do... you guessed it, math (but really fast this time).</p>
-<p>The average computer program doesn't use these things.
-They use relatively small positive values.
-They don't compute over the Infinite Set of Natural Numbers&trade;.
-They don't need to halt.
-Modern computer programs compute over arbitrary nominal data types and abstractions.
-They reason about state-over-time where time is relative and user-bound, network-bound, or throttled by a hardware bus.
-The only reason numbers ever come up is when a program needs to count instances of some arbitrary data.
-Negative numbers come up only because things are still indexed starting at zero (<a href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html" target="_blank">Dijkstra</a> was wrong, it's time to move on).
-Reasoning about numbers is mostly limited to which arbitrary finite ranges with whole-value increments are accepted or rejected.
-None of this is math.
-100% of this is abstract, contrived, domain specific nonsense which is completely necessary to solve problems in computing.
-Nobody cares that <i>technically</i> you only need functions and whole numbers.
-It's also technically true that the whole of mathematics and logic is inconsistent and impossible to actually formalize.</p>
-<p>So how to get math out of computing?
-Easy.
-We need a programming language that is designed to <i>compute</i> not calculate.
-What do I mean by that?</p>
-<ul>
-<li>Numbers are small, finite, and explicitly for counting other, more useful objects that aren't numbers.</li>
-<li>Data <i>is information</i> to be generated and transformed by algorithms.</li>
-<li>Data <i>is not Algebra</i>. It is not described by the abstract function which produces it.</li>
-<li>Programs are Data, but not all Data is a Program.</li>
-<li>Not all Data is created equal, each instance has a Type (which is also Data).</li>
-<li>Functions are Data, and they have an explicit Type, not nonsense like<br> <code>Eq a where</code>,<br> <code>'x -> 'xs</code>,<br> or <code>typename &lt;T&gt;</code></li>
-<li>Programs must respect a Data Type, or be instantly rejected.</li>
-<li>Not all Data is a Program, but all Data may <i>contain</i> a Program.</li>
-<li>The reason Programs are written <i>is</i> to produce some re-useable artifact.</li>
-<li>The reason Programs are written <i>is not</i> to interpret the Program directly.</li>
-<li>All proofs about Programs can <i>and should</i> be written as Programs.</li>
-<li>You cannot validate a Program by waiting for errors while it executes.</li>
-<li>You cannot validate a Program by assuming all errors are predictable.</li>
-<li>The word "Algorithm" does not imply math, nor does it refer to a mathematical concept. It is a term which computer science has graciously lent mathemeticians.</li>
-<li>The method of Programming should be able to express more than just the Program artifact (so not C, sorry folks).</li>
-<li>Abstractions are only useful until they prevent a Program from expressing something.</li>
-<li>A Program must be explicit about where and when an operation happens.</li>
-<li>Programs <i>are not</i> a list of constraints for other Programs to solve. Constraints are a user-level domain.</li>
-</ul>
-<p>Say someone up and implemented a programming language according to this philosophy. You're probably wondering how I propose to verify programs written in it (since I'm such an expert on everything else).
-Dear reader, I'm glad you asked...</p>
-<p>First things first, the Type of Data is described by a user-level function that observes the Data and decides if it is part of that type or not.
-Is it (gasp) <i>term level</i>? Yes. Of course it is. Why in this great green Earth would I ever force engineers to use multiple, disapparate term levels?
-Actually, why was anyone using Types-as-in-Theory in the first place? Who was the chump who took the advice of a <a href="https://intuitionistic.wordpress.com/wp-content/uploads/2010/07/martin-lof-tt.pdf" target="_blank">philosopher</a> and tried to apply it to an engineering field?
-Just give the compiler a function that tells it "yes" or "no" given a Data instance.
-It's smart enough, we're not in 1970 after all...</p>
-<p>That brings us to our next point.
-How do I propose we decide if types are the same if they're all functions?
-Wasn't I just complaining about non-halting indetermi-whatsits?
-It turns out we've solved that.
-...Well mathematics has, I'll give them that one.
-According to Homotopy Type Theory- ...stay with me now, the Univalence Axiom says we can prove that if two functions are equal... they're equal.
-How marvelous!
-What's even more marvelous, two functions being the same has been a solved problem since 2013 when mathematics worldwide <i><a href="https://homotopytypetheory.org/book/" target="_blank">published a book</a> telling everyone about it.</i>
-You don't need to wait for a function to terminate or not in order to decide if it's the same as another.
-Turns out you can tell most of the time simply by looking at them.
-It's still a mystery to me why nobody in computer science immediately incorporated this...</p>
-<p>So what about the rest of the stuff you need to verify in a Program.
-Turns out that's it.
-If you can make data types defined as arbitrary user-level functions, then you can simply check whatever you'd like.
-This mechanism covers bounds checking, linear types, resource safety, and anything else you need to verify.
-Just write the function to check it.</p>
-<p>Deciding <i>when</i> to check is a simple matter as well.
-If you have an instance in a function scope, it has a type, and that type needs to be checked.
-If you've already checked the type once in that scope, then you know it's legit.
-Conditionals are easy too. 
-If you're in the subroutine for a true condition, then that condition must be true for the whole routine. 
-If you're in the other routine, the condition can't be true.
-There's other stuff like mutability, state, structural typing and whatnot that muddle the details, but this general approach still applies.</p>
-<p>So there it is. 
-None of this is particularly hard.
-It shouldn't be, it doesn't require math.
-Verifying a program <i>shouldn't</i> require math. Ever.
-So stop using mathematics and theory when you don't have to.
-They lied to us.
-We never needed it, we have computers.</p>
-</article>
-<hr>
-<!--
-<h1 id="Why-Lisp-Failed"><a href="#Why-Lisp-Failed">Why LISP Failed</a></h1>
-<article>
-<p></p>
-</article>
--->
 </body>
 <footer>
-<p>Is my writing stupid?<br>Did I make you mad?<br><b><i>Citation needed?!?!</i></b></p>
-<p>Take a deep breath... Mathematics and computer science are mostly philosophy and drivel. At least mine is fun to read.</p>
 <p>This page is Copyright &copy; Daniel Smith, daniel.smith.again@gmail.com</p>
 </footer>
