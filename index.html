@@ -5,9 +5,9 @@
 <link href="./style.css" rel="stylesheet"/>
 <script>
 var Articles = [
-  ['About', 'about'],
-  ['Too Much Math', 'too-much-math'],
-  ['When I Hear "X In Haskell"', 'when-i-hear-x-in-haskell']
+  ['About', 'about.html'],
+  ['Too Much Math', 'too-much-math.html'],
+  ['When I Hear "X In Haskell"', 'when-i-hear-x-in-haskell.html']
 ]
 </script>
 </head>
@@ -16,54 +16,16 @@ var Articles = [
 <a onclick="SelectArticle()" id="Title">Append</a>
 </h1>
 <div id="ArticleList">
+<a href="./about.html">About</a>
+<a href="./too-much-math.html">Too Much Math</a>
+<a href="./when-i-hear-x-in-haskell.html">When I Hear "X in Haskell"...</a>
+<!--<a href="./we-all-know-why-lisp-died.html">We All Know Why Lisp Died</a>-->
 </div>
-<article id="ArticleContainer">
 <script>
-var Container = document.getElementById('ArticleList');
-(() => {
-  console.log('Container Loaded')
-  Container.replaceChildren()
-  Articles.map(a => {
-    var e = document.createElement('a')
-    e.href = '#' + a[1]
-    e.addEventListener('click', (e) => OpenArticle(e))
-    e.appendChild(document.createTextNode(a[0]))
-    Container.appendChild(e)
-  })
-})()
-function SelectArticle() {
-  document.getElementById('ArticleList').style.display = "flex";
-}
-
-function OpenArticle(e) {
-  console.log(e)
-  var url = new URL(document.location)
-  console.log(url)
-  if (url.hash == '') {
-    document.getElementById('ArticleContainer').style.display = 'none';
-    document.getElementById('Title').innerHTML = 'append';
-  }
-  else {
-    //var path = url.origin + '/' + url.hash.substring(1) + '.html'
-    var path = url.hash.substring(1) + '.html'
-    var request = new XMLHttpRequest()
-    request.open('GET', path, true)
-    request.onload = (doc) => {
-      var article = document.getElementById('ArticleContainer')
-      article.replaceChildren()
-      article.innerHTML = request.responseText
-      article.style.display = 'block';
-      var link = document.querySelectorAll("a[href='" + url.hash + "']")
-      document.getElementById('Title').innerHTML = link[0].innerHTML;
-    }
-    request.send()
-  }
-  document.getElementById('ArticleList').style.display = 'none';
-}
-window.onhashchange = OpenArticle
-OpenArticle()
+ function SelectArticle() {
+  document.getElementById('ArticleList').style.display = 'flex';
+ }
 </script>
-</article>
 </body>
 <footer>
 <p>This page is Copyright &copy; Daniel Smith, daniel.smith.again@gmail.com</p>

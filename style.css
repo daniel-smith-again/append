@@ -1,12 +1,11 @@
 html{height:100%;}
 body{min-width:40ch;margin:auto;color:black;background-color:white;font-family:serif;font-size:calc((16px + 1vw + 1vh) / 1.5);}
+body>*{width:69%;margin:auto;}
 code{color:dimgray}
-hr{height:0;margin:auto;margin-top:50vh;margin-bottom:3ch;}
 a, a:hover{text-decoration:none;color:inherit;font-style:inherit;cursor:pointer;border-radius:0.5ch;color:dimgray;}
 a:hover{background-color:dimgray;color:black;}
 h1 a{text-decoration:none;color:black;}
-article{max-height: 69vh;width:69%;margin:auto;overflow-y:auto;border-radius:0.5ch;padding:3ch; box-shadow:3px 3px 10px black inset;}
-footer{position:absolute; bottom:0; left:0; border:none; margin:auto; text-align:center; width:100%;}
+footer{margin:auto; text-align:center; width:100%;}
 #ArticleList{position:absolute;height:100%;width:100%;background-color:white;display:none;z-index:1;top:0;left:0;flex-flow:column nowrap;align-items:flex-start;justify-content:flex-start;overflow:auto;}
 #ArticleContainer{display:none;}
 #ArticleList a{width:fit-content;margin:3ch;margin-left:auto;margin-right:auto;display:flex;justify-content:center;align-items:center;}
