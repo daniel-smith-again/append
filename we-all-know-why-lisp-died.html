@@ -41,12 +41,12 @@ At some point Lisp was good, and then at some point it wasn't.
 That was the point where everyone who filed Chapter 11 on their Lisp startup came together for a big crying session and decided nothing was actually their fault, it was the economy.
 It was early in the tech scene before the WWW age, before "tech" was "tech".
 Nobody knew yet that basing an entire company around your esotric knowledge of a single tool was a bad idea.
-For the record, if that idea ever worked in the first place, we'd be seeing billboard ads like 
+For the record, if that idea ever worked in the first place, we'd be seeing billboard ads like,
 <div style="width:30ch;height:13ch;border:solid black 3px;display:flex;justify-content:center;align-items:center;text-align:center;flex-flow:column nowrap;margin:auto;border-radius:1ch;">
 <b style="font-family:sans-serif;font-size:larger;">Advanced Applications LLC</b><br>
 "I can use a screwdriver!"
 </div>
-Boy, talk about inflation markers...
+Boy, talk about <a href="https://ferrous-systems.com/" target="_blank">inflation markers</a>...
 </p>
 <p>
 Then all these losers went on to work for an <i>actual</i> company that was resistant to short term market trends, made a bunch of money, and spent the next decade griping that Lisp was actually good and it's those dumb UNIX (pronounced <a href="https://web.archive.org/web/20210507143515/http://homes.cs.washington.edu/~weise/unix-haters.html" target="_blank">eunuchs</a>) plebs and their lack of posterity that killed their startup dreams.
@@ -84,10 +84,10 @@ Unix and C was objectively better than Lisp.
 Not because it was more <i>expressive</i>, or because it made programming <i>profound</i>, but because it was adaptible.
 Lisp wasn't designed for plug n' play.
 It was never built to handle after-market add ons.
-Even now, the main way you interact with Lisp is through an opaque "image" which is literally the entire OS process for that lisp session, as it's laid out in memory, serialized onto the disk.
+Even now, the main way you interact with Lisp is through an opaque "image" which is literally the entire OS process for that Lisp session, as it's laid out in memory, serialized onto the disk.
 You have to pick up the entire thing, make your adjustments, and then delicately nestle it back into the hard drive when you're done.
 If that sounds like the most obtuse development experience ever invented it's because it is.
-It was designed for single threaded Lisp machines which were always on, ran the Lisp subsystem directly as the OS, and exclusively ran lisp programs and nothing else.
+It was designed for single threaded Lisp machines which were always on, ran the Lisp subsystem directly as the OS, and exclusively ran Lisp programs and nothing else.
 </p>
 <p>
 Modern systems offer you hardware access, and the minimum subsystem necessary for talking to hardware peripherals, and you take it from there.
@@ -122,7 +122,7 @@ Do you even have an inkling?
 It's the same reason UNIX sucks.
 It's the same reason the 90's was a tech "dark age" where we repeated all the crap people already knew in the 70's.
 It's because Lisp was <b>proprietary tech</b>.
-All those lisp startups.
+All those Lisp startups.
 All those Lisp Machines with their crazy performant hardware.
 <i>All trade secret.</i>
 </p>
@@ -154,32 +154,78 @@ Yes, I'm aware that the Common Lisp Hyperspec is a wonderful work graciously hos
 <p>
 Nope, you can't have that either.
 It's not expressive, it's not better, it's not even good.
-Making everything follow prefix function application is not expressive, that's a thought virus.
-I don't think in prefix, why should I ever have to function using only prefix notation.
+It was a <a href="https://dl.acm.org/doi/10.1145/367177.367199" target="_blank">markup language for lambda calculus</a>.
+One would think that, given a language for expressing any directed data structure, that there would be an explosion of creative evaluation rules.
+Instead, Lisp enforces a singular prefix evaluation rule and offers no alternatives.
+Ironically, even it's non-standard evaluation rules still follow the "standard" prefix form.
+So much for expressivity.
+Being able to express onesself using only functions is a dire circumstance indeed.
 </p>
 <p>
-Any GC'd language is slow. 
-There are a ton of valiant lisp implementations which jump through flaming hoops while bending over backwards to give lisp acceptable performance, but there's only so much you can do with trashy semantics.
-The fact is that we just have better strategies for programming that don't require GC.
-Lisp might have the makings of a performant language, if it didn't also impose the design constraints of the <a href="https://docs.oracle.com/javase/specs/" target="_blank">JVM</a>.
+Syntax aside, because Lisp is based on abstract math, it unilaterally prevents you from reasoning about time, state, resource usage, or anything relevant to achieving a task.
+A silver lining is that this necessitated garbage collection, which went on to be extremely relevant once someone thought to use it for anything other than Lisp.
+Modern Lisp may have all sorts of built-in routines for doing actual work, but those are't anything to do with Lisp, they're the same subroutines that all the other languages invoke to do work.
+Except Lisp is at a further disadvantage since other languages treat these routines as modular libraries. 
+With Lisp, what you get is... what you get.
+Algorithms have locked-in performance with no alternatives.
+If you want the latest sorting algo that does it in <i>O</i>(log log log <i>n</i>) time, you're stuck waiting for the Lisp implementor to incorporate it, if they even can.
+</p>
+
+<p>
+"But, it's so good for prototyping."<br>
+Prototyping what, exactly?
+My desktop computer has two types of processors, three screens, four hard drives, five transport layers, about 15 different kinds of network protocols, and more bytes of ram than a 32 bit number can count.
+What am I stuck prototyping on Lisp? 
+A serial terminal app. Oh joy!
+All the prototyping that Lisp is good for, even Bash is better at.
+Sure, we didn't have Bash until UNIX, but there's the rub, now we <i>do</i> have generally better options.
+How long has POSIX been around without the Common Lisp working group incorporating it?
+Sorry, that was a trick question. 
+POSIX was standardized first.
+</p>
+</article>
+<h2>The OG Walled Garden</h2>
+<article>
+<p>
+What's the moral of the story here (besides the fact that I don't approve of Lisp shilling)?
+One part of it is to avoid closed-source and interop lock-in models with your tech.
+Symbolics hung itself from playing everything too close.
+The first alternative that came along made them so obsolete that they couldn't even port their software products.
+Play nice with others.
 </p>
 <p>
-Lisp also has a bunch of built in bloat.
-It has lists, vectors, a whole bunch of different numbers, structs, dictionaries, and objects.
-The problem is that these are all hard-coded into the language.
-I understand if a language intended for scripting has its own opinions about data, but not from a language intended for production.
-In any other programming language, I can hot-swap abstractions at the library level.
-I can even combine them.
-I can't do that in lisp.
+The second part is to not standardize the qualities of a programming language that just killed it.
+Whatever features and implementation methods those failed Lisp companies were using, I would take them with a grain of salt.
+Why, oh why, are Common Lisp streams text based?
+<i>Why do they only come from files?</i>
+We've been serializing structured data since <a href="https://en.wikipedia.org/wiki/Difference_engine#Charles_Babbage's_difference_engines" target="_blank">Babbage</a> and somehow, the entire working group saw fit to standardize that streams are <a href="https://www.lispworks.com/documentation/HyperSpec/Body/21_aab.htm" target="_blank">text-only</a>.
+Do you know just how much stuff on a computer is streamed?
+<i>All of it!</i>
+Extensible streams would have let a Lisp implementation <a href="https://gfxcourses.stanford.edu/cs149/fall21content/media/gpuarch/07_gpuarch.pdf" target="_blank">emit CUDA directly to the GPU</a>!
+Lisp would have been the premier prototyping platform for networking protocols.
+But nope, all we need are <i>f i l e s</i> (oh yes, and bytes because that makes <i>all</i> the difference).
 </p>
 <p>
-I really can't fault lisp for parentheses.
-Delimiting expressions is a natural consequence of having expressions.
-In any expression based language where a single line does more than three things, it ends up looking like a Lisp form.
-However, not every keyword needs to have its own set of parentheses.
-Going back to the prefix notation fixation, it would do a lot of good if there was infix function application and maybe even compound expressions inside a single set of parentheses.<br>
-Compare <code>(+ (- (* 3 2) 1) 5)</code><br>to <code>(5 + (3 * 2 - 1))</code><br>
-and <code>(f (g (h x)))</code><br>to <code>(f g h x)</code>.
+The third part is that you must assume users of your language will eventually want to complete their work and stop using your language.
+At some point, a language use will be done programming and will want to run their program as a stand-alone routine on their system.
+In Lisp, this is just downright impossible.
+The best that current implementations can do is to emit a portable executable that simply packages the entire Lisp environment with it.
+The only thing making it different from a plain Lisp image is that there's some code in their somewhere to expidite calling the entry point to the app.
+</p>
+<p>
+Some of you might point out that this lets you debug software <a href="https://thenewstack.io/nasa-programmer-remembers-debugging-lisp-in-deep-space/" target="_blank">anytime, anywhere</a>. 
+The compiler and debugger ships with each copy. How nice!
+I feel all warm and fuzzy inside knowing that if I ship a Lisp based product, anyone and their grandma can drop into the debugger and disassemble my IP.
+Remember how Lisp never had to deal with obfuscation and security in general because Lisp Machine vendors were so anal retentive about who got to play with their ball?
+Yeah...
+</p>
+<p>
+We all <i>say</i> that it was "AI Winter" that killed Lisp but it wasn't.
+It got outmoded and nobody stepped up to improve it.
+By the time it was standardized, its abstractions weren't even relevant.
+Whatever good ideas it had were repurposed in actually useful tools.
+That's what killed Lisp.
+Uselessness.
 </p>
 </article>
 </body>
