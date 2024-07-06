@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title>append</title>
+<link href="./style.css" rel="stylesheet"/>
+</head>
+<body><div>
+<h1>We All Know Why Lisp Died</h1>
+<p>or how history is written by the victim</p>
+<br>
+<h2>Lisp Is Dead</h2>
+<article>
+<p> 
+We all know whodunnit.
+The "AI Winter" of course.
+All those evil entrepreneurs and grifters co-opted our beautiful, virgin <a href="https://www.dreamsongs.com/WIB.html" target="_blank">Right Thing</a> and killed it like the proverbial golden goose.
+Yes... that's exactly what happened.
+</p>
+<p>
+"But Lisp is still alive and well!" you cry.<br>
+You're absolutely right, Gerald Sussman does use contrived Scheme examples to <a href="https://youtu.be/HB5TrK7A4pI?si=rfo7ioGoyE92sTUY" target="_blank">highroad C programmers</a>.<br>
+"But its still widely used today!"<br>
+Ah yes, Autocad. How profound...<br>
+"It fundamentally changed how I think about programming!"<br>
+Wow, your bar is low.<br>
+"It's like you don't even care that <a href="http://arclanguage.org/" target="_blank">Paul Grahm sneezed!</a>"<br>
+oh cryin' out loud...<br>
+Look, I'm not writing this just to listen to you defend the obvious uses for singly linked lists and debuggers.
+Please, you can stop reading now.
+</p>
+</article>
+<h2>Anywho, Lisp is Dead</h2>
+<article>
+<p>
+And not from murder or any tragic kind of circumstance.
+Tech bubbles come and go, but <i>good</i> tech stays.
+There was a point where even I was shocked that anyone would dislike Lisp, which ended up being a sign of a stroke, but that's a story for another time.
+At some point Lisp was good, and then at some point it wasn't.
+</p>
+<p>
+That was the point where everyone who filed Chapter 11 on their Lisp startup came together for a big crying session and decided nothing was actually their fault, it was the economy.
+It was early in the tech scene before the WWW age, before "tech" was "tech".
+Nobody knew yet that basing an entire company around your esotric knowledge of a single tool was a bad idea.
+For the record, if that idea ever worked in the first place, we'd be seeing billboard ads like,
+<div style="width:30ch;height:13ch;border:solid black 3px;display:flex;justify-content:center;align-items:center;text-align:center;flex-flow:column nowrap;margin:auto;border-radius:1ch;">
+<b style="font-family:sans-serif;font-size:larger;">Advanced Applications LLC</b><br>
+"I can use a screwdriver!"
+</div>
+Boy, talk about <a href="https://ferrous-systems.com/" target="_blank">inflation markers</a>...
+</p>
+<p>
+Then all these losers went on to work for an <i>actual</i> company that was resistant to short term market trends, made a bunch of money, and spent the next decade griping that Lisp was actually good and it's those dumb UNIX (pronounced <a href="https://web.archive.org/web/20210507143515/http://homes.cs.washington.edu/~weise/unix-haters.html" target="_blank">eunuchs</a>) plebs and their lack of posterity that killed their startup dreams.
+And somehow, <i>somehow</i>, we took them all seriously.
+</p>
+<p>
+But what gives?
+If Lisp was so good, it would have stuck around, right?
+I think I know what happened.
+</p>
+</article>
+<h2>Lisp Actually Sucks</h2>
+<article>
+<p>
+What we have here, is a failure to adapt.
+Observe the period where Lisp was very popular.
+Why was it so popular?
+Because everyone and their auntie had a Lisp Machine.
+Before microcomputers were around, Lisp Machines won the hardware game. 
+They had all sorts of specialized hardware for computing Lisp specific computations.
+They had special machine types for cons pairs and hardware-based garbage collection primitives.
+Very fancy stuff.
+</p>
+<p>
+Which was all moot when the microprocessor (and later the modular bus plug 'n play style motherboard architecture) could compute anything at all faster than a Lisp Machine could cadduddr its carddiddlies.
+And all that new, faster stuff didn't run Lisp, it ran Unix and was programmed in C, "New Jersey" style.
+Here's where we get the "Worse is Better" quip.
+It's both a true statement and a sore-loser dig at the better idea.
+</p>
+</article>
+<h2>Bet Your Ass It's Better</h2>
+<article>
+<p>
+Unix and C was objectively better than Lisp.
+Not because it was more <i>expressive</i>, or because it made programming <i>profound</i>, but because it was adaptible.
+Lisp wasn't designed for plug n' play.
+It was never built to handle after-market add ons.
+Even now, the main way you interact with Lisp is through an opaque "image" which is literally the entire OS process for that Lisp session, as it's laid out in memory, serialized onto the disk.
+You have to pick up the entire thing, make your adjustments, and then delicately nestle it back into the hard drive when you're done.
+If that sounds like the most obtuse development experience ever invented it's because it is.
+It was designed for single threaded Lisp machines which were always on, ran the Lisp subsystem directly as the OS, and exclusively ran Lisp programs and nothing else.
+</p>
+<p>
+Modern systems offer you hardware access, and the minimum subsystem necessary for talking to hardware peripherals, and you take it from there.
+Nothing is required to be compatible unless you design it that way.
+C can adapt to this because whatever you're doing, it's one of two things, jostling bits on the CPU, which C had primitives for, or calling some other opaque routine to do the jostling and hand you the bits, which C also has a primitive for.
+Whatever you end up doing with the hardware, it's always one of those two things.
+By comparison, Lisp has none of those things.<br>
+What's a cons?
+How do you put that on a register?<br>
+CAR and CDR?
+Well our pointers are only 14 bits long. 
+How do you propose to implement that?<br>
+GC? 
+What are you collecting? And where?<br>
+I have one main CPU and each of my three cards has their own discrete CPU and they all communicate over shared memory.<br>
+Does one CPU mark and another sweep?<br>
+Too late, I swapped the third card and now it does something completely different...
+</p>
+<p>
+I have to pause this contrived example here to point out that I'm being completely unfair.
+C does not have a primitive or built-in feature for adressing homogeneous hardware architecture.
+However, I can write a function in C to ask the OS what type of hardware is attached.
+I can also write a C program to send and receive data from a peripheral.
+I simply cannot do those things in Lisp, and that's a fair statement.
+</p>
+</article>
+<h2>How Good We Have It</h2>
+<article>
+<p>
+Do you know why I can't do any of those things in Lisp?
+Do you even have an inkling?
+It's the same reason UNIX sucks.
+It's the same reason the 90's was a tech "dark age" where we repeated all the crap people already knew in the 70's.
+It's because Lisp was <b>proprietary tech</b>.
+All those Lisp startups.
+All those Lisp Machines with their crazy performant hardware.
+<i>All trade secret.</i>
+</p>
+<p>
+All those companies that shipped The Right Thing kept it to themselves.
+When they went under, they brain drained the entire field of computer science.
+Lisp Machines got replaced with Sun OS systems and nothing was portable.
+The Lisp Machine with all its garbage collection and expressivity and profoundness went back to Symbolics Inc. and was lost forever in escrow or whatever.
+Indeed, one of the things that led to <a href="https://www.fsf.org/history/#rms-hackers-1984" target="_blank">RMS starting FSF</a> was the tight control Symbolics Inc. exercised over who had access to their Lisp Machines and the software written on them.
+</p>
+<p>
+Worse isn't better.
+<i>Better</i> is better.
+C is better.
+We have copious open standards now for C things.
+<a href="https://www.w3.org/standards/" target="_blank">The Internet</a>, <a href="https://www.ietf.org/" target="_blank">The Internet (actually)</a>, <a href="https://www.khronos.org/" target="_blank">Kronos Group</a>, etc...
+Do you have any guesses what's not an open standard?
+That's right! 
+<a href="https://webstore.ansi.org/standards/incits/incits2261994s2008#PDF" target="_blank">INCITS 226-1994</a>, the Common Lisp standard.
+It's sixty bucks.
+I'm telling you, you can't make this stuff up.
+And before you start telling me about how C is ANSI too and costs just as much, it's an open secret the working group just publishes the "draft" of each actual ANSI standard <a href="https://www.open-std.org/jtc1/sc22/wg14/www/projects#9899" target="_blank">online</a>, <i>for free</i> (and assumedly the general good of society).
+I'll bet anyone money I can download a PDF of the latest C draft and it will be word-for-word what's on the ANSI version.
+Yes, I'm aware that the Common Lisp Hyperspec is a wonderful work graciously hosted by Vendor Lock-In- <i>cough</i> <a href="https://www.lispworks.com/" target="_blank">LispWorks</a>, clearly out of goodwill for the larger Lisp community.
+</p>
+</article>
+<h2>At Least It's a Good Language</h2>
+<article>
+<p>
+Nope, you can't have that either.
+It's not expressive, it's not better, it's not even good.
+It was a <a href="https://dl.acm.org/doi/10.1145/367177.367199" target="_blank">markup language for lambda calculus</a>.
+One would think that, given a language for expressing any directed data structure, that there would be an explosion of creative evaluation rules.
+Instead, Lisp enforces a singular prefix evaluation rule and offers no alternatives.
+Ironically, even it's non-standard evaluation rules still follow the "standard" prefix form.
+So much for expressivity.
+Being able to express onesself using only functions is a dire circumstance indeed.
+</p>
+<p>
+Syntax aside, because Lisp is based on abstract math, it unilaterally prevents you from reasoning about time, state, resource usage, or anything relevant to achieving a task.
+A silver lining is that this necessitated garbage collection, which went on to be extremely relevant once someone thought to use it for anything other than Lisp.
+Modern Lisp may have all sorts of built-in routines for doing actual work, but those are't anything to do with Lisp, they're the same subroutines that all the other languages invoke to do work.
+Except Lisp is at a further disadvantage since other languages treat these routines as modular libraries. 
+With Lisp, what you get is... what you get.
+Algorithms have locked-in performance with no alternatives.
+If you want the latest sorting algo that does it in <i>O</i>(log log log <i>n</i>) time, you're stuck waiting for the Lisp implementor to incorporate it, if they even can.
+</p>
+
+<p>
+"But, it's so good for prototyping."<br>
+Prototyping what, exactly?
+My desktop computer has two types of processors, three screens, four hard drives, five transport layers, about 15 different kinds of network protocols, and more bytes of ram than a 32 bit number can count.
+What am I stuck prototyping on Lisp? 
+A serial terminal app. Oh joy!
+All the prototyping that Lisp is good for, even Bash is better at.
+Sure, we didn't have Bash until UNIX, but there's the rub, now we <i>do</i> have generally better options.
+How long has POSIX been around without the Common Lisp working group incorporating it?
+Sorry, that was a trick question. 
+POSIX was standardized first.
+</p>
+</article>
+<h2>The OG Walled Garden</h2>
+<article>
+<p>
+What's the moral of the story here (besides the fact that I don't approve of Lisp shilling)?
+One part of it is to avoid closed-source and interop lock-in models with your tech.
+Symbolics hung itself from playing everything too close.
+The first alternative that came along made them so obsolete that they couldn't even port their software products.
+Play nice with others.
+</p>
+<p>
+The second part is to not standardize the qualities of a programming language that just killed it.
+Whatever features and implementation methods those failed Lisp companies were using, I would take them with a grain of salt.
+Why, oh why, are Common Lisp streams text based?
+<i>Why do they only come from files?</i>
+We've been serializing structured data since <a href="https://en.wikipedia.org/wiki/Difference_engine#Charles_Babbage's_difference_engines" target="_blank">Babbage</a> and somehow, the entire working group saw fit to standardize that streams are <a href="https://www.lispworks.com/documentation/HyperSpec/Body/21_aab.htm" target="_blank">text-only</a>.
+Do you know just how much stuff on a computer is streamed?
+<i>All of it!</i>
+Extensible streams would have let a Lisp implementation <a href="https://gfxcourses.stanford.edu/cs149/fall21content/media/gpuarch/07_gpuarch.pdf" target="_blank">emit CUDA directly to the GPU</a>!
+Lisp would have been the premier prototyping platform for networking protocols.
+But nope, all we need are <i>f i l e s</i> (oh yes, and bytes because that makes <i>all</i> the difference).
+</p>
+<p>
+The third part is that you must assume users of your language will eventually want to complete their work and stop using your language.
+At some point, a language use will be done programming and will want to run their program as a stand-alone routine on their system.
+In Lisp, this is just downright impossible.
+The best that current implementations can do is to emit a portable executable that simply packages the entire Lisp environment with it.
+The only thing making it different from a plain Lisp image is that there's some code in their somewhere to expidite calling the entry point to the app.
+</p>
+<p>
+Some of you might point out that this lets you debug software <a href="https://thenewstack.io/nasa-programmer-remembers-debugging-lisp-in-deep-space/" target="_blank">anytime, anywhere</a>. 
+The compiler and debugger ships with each copy. How nice!
+I feel all warm and fuzzy inside knowing that if I ship a Lisp based product, anyone and their grandma can drop into the debugger and disassemble my IP.
+Remember how Lisp never had to deal with obfuscation and security in general because Lisp Machine vendors were so anal retentive about who got to play with their ball?
+Yeah...
+</p>
+<p>
+We all <i>say</i> that it was "AI Winter" that killed Lisp but it wasn't.
+It got outmoded and nobody stepped up to improve it.
+By the time it was standardized, its abstractions weren't even relevant.
+Whatever good ideas it had were repurposed in actually useful tools.
+That's what killed Lisp.
+Uselessness.
+</p>
+</article>
+</div></body>
+<footer>
+<p>This page is Copyright &copy; Daniel Smith, daniel.smith.again@gmail.com</p>
+</footer>
