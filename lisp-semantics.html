@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<head>
+	<meta charset='utf-8'>
+	<title>append</title>
+	<style>
+	body{ max-width:100ch; width:62%; min-width:40ch; margin:auto; color:black; background-color:white; font-family:serif; font-size:calc((16px + 1vw + 1vh) / 1.7); }
+  h1, h2, h3, h4, h5, h6{margin:auto;text-align:center;}
+	code{color:dimgray;}
+	hr { height:0; margin:auto; margin-top:50vh; margin-bottom:50vh; }
+	a, a:hover{ text-decoration:none; color:inherit; font-style:inherit; cursor:pointer; border-radius:0.5ch;}
+  a:hover{background-color:aqua;}
+  footer{ position:relative; bottom:0; border:none; margin:auto; margin-top:50vh; text-align:center; font-size:calc((16px + 1vw + 1vh) / 2)}
+	</style>
+</head>
+<body>
+<h1><a href='#lisp-semantics-could-be-better' id='lisp-semantics-could-be-better'>Lisp Semantics Could Be Better</a></h1>
+	<p>Lisp has been at the forefront of development for every new paradigm in programming languages. 
+	If it wasn't the origin of a specific feature, then it was the environment used to test it. 
+	At the same time, Lisp is the second oldest programming language. However, that statement is a slight misnomer.</p>
+	<p>There has not been a single cannonical Lisp language which has persisted throughout time. 
+	(One could make the case that Common Lisp<a href="http://www.lispworks.com/documentation/HyperSpec/Body/01_ab.htm" target="_blank"><sup>*</sup></a> is the most accurate Lisp, but concensus is not the same as canonnicity.)
+	Rather, there has been a multitude of Lisps which all manifest the same overall structure, but vary wildly.<a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)#Timeline" target="_blank"><sup>*</sup></a>
+	Observe the variances in the ways modern Lisp languages function.
+	Each language has fundamental differences in their semantics which are all expressed in the same Uniform-And-Homoiconic-Syntax&trade;.</p>
+	<p>Here there lives a most persnickity weakness. 
+	Lisp is expected to be, and touted as, <i>the</i> groundbreaking programming tool which expands minds, puts hair on chests, and launches academic careers to the top of the Ivory Tower...<br>
+	Except that it isn't.</p>
+	<p>If one wants to learn about Functional Programming, Haskell is a better choice.
+	If one desires to architect with objects, Smalltalk is best.<br>
+	For logic, Prolog.<br>
+	For matricies and arrays, APL.<br>
+	For dynamic typing, Smalltalk again.<br>
+	For static typing, Haskell.<br>
+	For imperative programming, C.<br>
+	For concurrency, Go.<br>
+	For garbage collection, D.<br>
+	For recursion, Scheme (finally, a Lisp!).<br>
+	For extensibility, Forth (oh dear reader, you thought I'd mention macros didn't you...)</p>
+	<p>Lisp has lost it's mind-expanding-drug status. 
+	Other languages have matured and are far more suitable for different things.
+	That's all well and good, for that's the nature of human expression.
+	I can hear the protests already that Lisps macro system enables all of everything to be expressed through DSL's and other wonderful abstractions.
+	This is simply no longer true.
+	The CLOS does not have the same power as basic Smalltalk without losing what little berevity it has.
+	Most lisp implementations provide concurrency as an afterthought with very little of the expressive power of Lisp spent on the semantics.
+	Lisps are all still dynamically typed in the worst sense of the term, even though there's no reason at all preventing eval from verifying a form it's passed.</p>
+	<p>So by now, dear reader, you must have written me off as a lousy crank, just like everyone else today who doesn't pay proper respects to the One True Language&trade;.
+	On the contrary, I have been sent here as a prophet, to write this article shining light on the golden path which future Lisp implementations can follow.
+	And I mean that with every bit of conceit intended seeing how Lisp users have highroaded everyone for the last 50 years. (Really, the sheer nerve, and with stop the world GC!)
+	Those of you struggling in the dark, fear not, for who really can know better until they've experienced it<a href="http://www.paulgraham.com/avg.html" target="_blank"><sup>*</sup></a>.</p>
+	<h2>The Solution</h2>
+	<p>Allow me to elucidate, here's what a real Lisp would look like if Lisp were Lisp enough to Lisp-up to the task.
+	The Lisp language, all things considered, actually refers to a very narrow corner of what a programmming language is. 
+	For the rest of this article I ask that you consider Lisp for what it is, a symbolic rewrite system.
+	It's true that all existing Lisps fit that description. 
+	I mean that LISP Lisp is <b>only</b> a symbolic rewrite system.
+	The only operations in this language are the ones that manipulate syntax.
+	No functions, no vectors, strings, arrays, objects, lammbdas, etc...
+	Just LISP 0.1.
+	What does eval do? 
+	Expand macros and give you a normal form.</p>
+	<p>Lisp just being Lisp is a tarpit though (a tarpit with TCO that is).
+	Now I have The Diverging, Untyped, Lambda Calculus via the macro system.
+	This is no good, so we add a static type system. 
+	Which kind of type system? A static one of course. 
+	One with lots of wibbly-wobbly theory stuff that I'll never read or use. 
+	(Maybe even an inconsistent shoddy formalization!)
+	The only thing we have to type is forms, but this leads to an interesting property.
+	The reduction of a form is not decided by the first symbol, but by the type of the form.
+	Rather than prefix notation, you have whatever-you-like-fixity as long as you put it in a closed pair of braces.
+	I can hear you say, dear reader, "but Prophet of the Golden Lisp, isn't that string types?!"
+	Yes, its string-typing with sequences of symbols, what of it?
+	Now that we have statically verified types, we have a reasonable amount of decidability such that we can avoid divergence where it isn't wanted.</p>
+	<p>The next interesting property is that lisp forms are still organized into a tree structure.
+	This is very convenient because two forms that are at the same level can be evaluated at the same time without adverse effects.
+	It helps that the Lisp that we're dealing with now is purely functional as macro expansion is referentially transparent.
+	Closures let us program using whatever concurrent process communication paradigm we want.</p>
+	<p>Next up is logic. 
+	Boolean values are missing from this language.
+	However, functional logic programming normally uses success and failure rather than boolean values. 
+	Adding a null value should do the trick.
+	Now we have enough to create conditional evaluation as a macro which expands to the second or third form depending on whether the first form expands to something, or null.
+	Another facet of logic programming is the ability to perform unification on variables according some statement.
+	This is already possible with the macro systems' ability to inspect forms, create forms, and consequently unify two forms. (Naturally all according to some unification algorithm.<a href="https://kevincrawfordknight.github.io/papers/unification-knight.pdf" target="_blank"><sup>*</sup></a>)</p>
+	<p>Now we have concurrent, functional, logic, objects... programming.
+	That sounds more like the pinnacle of all language development.
+	More like a LISP.
+	And without a single DSL, extension, built-in macro, or primitive function.
+	</p>
+	<p>Of course now we can get much fancier with things like data structures.
+	A quoted list of symbols sure seems like a record with a little squinting. 
+	We had structural typing two paragraphs ago since all forms are "stringly" typed.
+	Now we have structurally typed records using quoted forms.
+	Forms are still our only actual datatype anyway so this works.
+	However, we need some primitives for working with forms-as-structures.
+	Set algebra is a good start. 
+	You can add, subtract, multiply (power set), and divide (relative complement) quoted forms.
+	What if one wishes to decompose a form?
+	Elements of a quoted form (which are more forms of course) can be selected by either indexed position or type (set division using an element).</p>
+	<p>I mentioned the ability to index forms back there.
+	That sounds like numbers.
+	It is numbers because this Lisp should naturally have numbers.
+	Whole numbers of course.
+	For the academics, a number is the cardinality of a quoted form.
+	For the pragmatists, you can just read an all-digits symbol as a number.</p>
+	<p>Let's take stock of what monster this rant has described so far.
+	We have a Lisp in all its homoiconic, uniform glory.
+	It has whole numbers, indexed multisets, general recursion, static typing (of some sort), concurrency, logic, and object orientation (as a poor man's closure<a href="http://wiki.c2.com/?ClosuresAndObjectsAreEquivalent" target="_blank"><sup>*</sup></a>).
+	That's quite a lot.
+	It either has every cool new idea, or you can make the cool new idea as a macro.
+	This is the kind of Lisp that would <i>really</i> do some mind expanding.
+	There's enough here to make coroutines, differential equation solvers, algebraic effect handlers, dynamic bindings, CLOS, meta-objects, etc...
+	Remember, dear reader, how short this article is.
+	Burn it into your minds what could be and how simple it really is.</p>
+	<h2>If I Must...</h2>
+	<p>I suppose I should address the static typing that I conveniently gave no details on. 
+	Those of you who are academically inclined have probably stopped reading by now.
+	Types are actually quite simple to implement in this language as they are list types.
+	All you need is a "recognizer" macro which looks at a form and returns its identity if the form is according to a certain notion of a type, or else returns null.
+	The type assertion will then expand to the object of the assertion being handed to the macro which guarantees this assertion.
+	Depending on the timing of where this recognizer macro is expanded, one has full-unrestricted dependent typing in all its terrifying expressiveness.</p>
+	<p>Another sticky part that I smooth over is the fact that this Lisp I'm describing still requires GC... 
+	Well, not exactly.
+	See, this Lisp only allows you to bind stuff as input to the macro.
+	Even then, you can only have a single binding per-macro: the form that the macro is expanding.
+	There's no concept of assignment and combined with referential transparency, a single macro expansion can be performed in a deterministic constant space.
+	Poof, now all resources are tied to lexical scope and GC is no longer required.
+	Structures no longer require GC either since there's no way for a structure to consume more space once it's been constructed.
+	Technically, you could even <i>sinfully</i> swap elements in-place (seriously, who's the math-head jerk who said this was bad?) if you maintain that each form resides in it's "own space" rather than staying serialized together in memory.
+	Even closures are space-constant since creating and binding one is <i>still</i> controlled by a lexical extent.
+	Even <i>x, y, and z</i> are space-constant since... you get the idea.</p>
+	<p>One final interesting point is that there is no function abstraction or application in this language, or even first-class functions. 
+	I make the audacious posit that they are not necessary since you have a complete rewrite system already, which corresponds almost directly to the Lambda Calculus.
+	One key part I should settle here is that macros in <i>this</i> Lisp are not global, but rather lexically scoped to the macro definition in which they were created.
+	It follows that closures are formed by the macro definitions which were lexically visible to a form where it was created in the body of another macro.
+	Variable binding, functions, and all other evaluation-level reductions are simulated by macro expansion of forms featuring those names or in-place constructions.
+	Macros are also first class since there's nothing stopping you from creating a macro that expands the macro definition form and consequently folds the known universe in on itself.
+	If this makes you feel lost and slightly afraid, I wasn't addressing <i>you</i> anyways, and this <a href="https://us.metamath.org/" target="_blank" style="text-decoration: underline;">link</a> will surely make it worse.</p>
+	<p>If any of this sounds good to you, please go make an interpreter for it.
+	If any of this sounds vague to you, please go make an interpreter which resolves inconsistencies and spites me in some way.
+	The entire point of this article is that it should be and <i>is</i> a feasible task to make a better Lisp.
+	The Lisp we need.
+	The Lisp that we deserve.
+	Remember, dear reader, what you're missing out on.</p>
+</body>
+<footer>
+  <a href="index.html">&#x1f3e0;</a>
+	<p>Is my writing stupid?<br>Did I make you mad?<br><b><i>Citation needed?!?!</i></b></p>
+	<p>Take a deep breath... Mathematics and computer science are mostly philosophy and drivel.</p>
+  <p>My opinions are my own. At least they're fun to read.</p>
+	<p>This page is Copyright &copy; Daniel Smith, daniel.smith.again@gmail.com</p>
+</footer>

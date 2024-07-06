@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<head>
+<meta charset='utf-8'>
+<title>append</title>
+<style>
+body{ max-width:100ch; width:62%; min-width:40ch; margin:auto; color:black; background-color:white; font-family:serif; font-size:calc((16px + 1vw + 1vh) / 1.7); }
+code{color:dimgray;}
+hr { height:0; margin:auto; margin-top:50vh; margin-bottom:50vh; }
+a, a:hover{ text-decoration:none; color:inherit; font-style:inherit; cursor:pointer; } 
+footer{ position:relative; bottom:0; border:none; margin:auto; margin-top:50vh; text-align:center; font-size:calc((16px + 1vw + 1vh) / 2)}
+</style>
+</head>
+<body>
+<h1 id="too-much-math"><a href="#too-much-math">Too Much Math:<br>The Manifesto</a></h1>
+<p>There's a great amount of irony in the opinion that anything to do with computing and computer science is a form of "math".
+History tells us to attribute computers to mathematicians, but that's not correct.
+Computers were designed only because women were sick of computing figures by hand (obligatory shout-out to the late, great Ada Lovelace).
+Computing was never mathematical, and for the first forty odd years, computing was treated with disdain by mathemeticians.
+The only reason mathemeticians ever came around is when the Four-Color Theorem was proven by sheer, unstoppable brute force.
+And even then it was another decade before mathematics accepted that the computer wasn't cheating.
+I see no reason now why mathemaical folks should have any business telling us how we should compute.</p>
+<p>This is especially painful in the field of formal verification.
+Indeed, formal verification was a branch of the crazy math niche of determining if a given function over the natural numbers will halt.
+Lots of useful properties were derived from that. 
+Most significantly, that you can't determine if <i>any</i> function will actually halt, only an impractically small subset.
+...Thanks, mathemtatics, now I can sleep soundly at night.</p>
+<p>The modern field of formal verification hasn't gotten much farther.
+The latest advent in theory is the SMT solver: allowing mathemeticians everywhere to determine nondeterminism faster than ever.
+Meanwhile, there's precious little application of verification in computer science.
+Airplanes, space transit, and government secrets are still the only fields.
+It's a running joke now that verification is dismissed by engineers because "a website isn't a rocketship" or "we're not Boeing".
+A good example is the latest and greatest in static verification for computers, a programming language that simply checks that the program doesn't leak or clobber its own data (three guesses what the name of that language is).
+This is weak...</p>
+<p>So what's wrong?
+Why aren't programmers verifying their code?
+Why is there still a frighteningly large movement advocating that we use dynamic programming languages and simply wait for errors to occur in real time?
+Why do statically verified programming langauges suck?
+It's because computer science is still being misled by mathematics.
+When you hear the word "verification", you start to frown and think of all the indeterminate non-halting functions that are out there just waiting for you to slip up.
+That's not what verification is or should be.
+We haven't even begun to verify computer programs.</p>
+<p>I challenge you to think of just one computer program involving complex numbers, sets, or other abstract mathematical structures where it's purpose isn't explicitly to compute those things.
+I'll bet you can't name a single one, because there isn't.
+Arbitrary Precision Arithmetic exists to help mathemeticians do... math.
+Floating point machine types exist to help engineers do... you guessed it, math (but really fast this time).</p>
+<p>The average computer program doesn't use these things.
+They use relatively small positive values.
+They don't compute over the Infinite Set of Natural Numbers&trade;.
+They don't need to halt.
+Modern computer programs compute over arbitrary nominal data types and abstractions.
+They reason about state-over-time where time is relative and user-bound, network-bound, or throttled by a hardware bus.
+The only reason numbers ever come up is when a program needs to count instances of some arbitrary data.
+Negative numbers come up only because things are still indexed starting at zero (Dijkstra was wrong<a href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html" target="_blank"><sup>*</sup></a>, it's time to move on).
+Reasoning about numbers is mostly limited to which arbitrary finite ranges with whole-value increments are accepted or rejected.
+None of this is math.
+100% of this is abstract, contrived, domain specific nonsense which is completely necessary to solve problems in computing.
+Nobody cares that <i>technically</i> you only need functions and whole numbers.
+It's also technically true that the whole of mathematics and logic is inconsistent and impossible to actually formalize.</p>
+<p>So how to get math out of computing?
+Easy.
+We need a programming language that is designed to <i>compute</i> not calculate.
+What do I mean by that?</p>
+<ul>
+<li>Numbers are small, finite, and explicitly for counting other, more useful objects that aren't numbers.</li>
+<li>Data <i>is information</i> to be generated and transformed by algorithms.</li>
+<li>Data <i>is not Algebra</i>. It is not described by the abstract function which produces it.</li>
+<li>Programs are Data, but not all Data is a Program.</li>
+<li>Not all Data is created equal, each instance has a Type (which is also Data).</li>
+<li>Functions are Data, and they have an explicit Type, not nonsense like <code>Eq a where</code>, <code>'x -> 'xs</code>, or <code>typename &lt;T&gt;</code></li>
+<li>Programs must respect a Data Type, or be instantly rejected.</li>
+<li>Not all Data is a Program, but all Data may <i>contain</i> a Program.</li>
+<li>The reason Programs are written <i>is</i> to produce some re-useable artifact.</li>
+<li>The reason Programs are written <i>is not</i> to interpret the Program directly.</li>
+<li>All proofs about Programs can <i>and should</i> be written as Programs.</li>
+<li>You cannot validate a Program by waiting for errors while it executes.</li>
+<li>You cannot validate a Program by assuming all errors are predictable.</li>
+<li>The word "Algorithm" does not imply math, nor does it refer to a mathematical concept. It is something computer science has graciously lent mathemeticians.</li>
+<li>The method of Programming should be able to express more than just the Program artifact (so not C, sorry folks).</li>
+<li>Abstractions are only useful until they prevent a Program from expressing something.</li>
+<li>A Program must be explicit about where and when an operation happens.</li>
+<li>Programs <i>are not</i> a list of constraints for other Programs to solve. Constraints are a user-level domain.</li>
+</ul>
+<p>Say someone up and implemented a programming language according to this philosophy. You're probably wondering how I propose to verify programs written in it (since I'm such an expert on everything else).
+Dear reader, I'm glad you asked...</p>
+<p>First things first, the Type of Data is described by a user-level function that observes the Data and decides if it is part of that type or not.
+Is it (gasp) <i>term level</i>? Yes. Of course it is. Why in this great green Earth would I ever force engineers to use multiple, disapparate term levels?
+Actually, why was anyone using Types-as-in-Theory in the first place? Who was the chump who took the advice of a <i>philosopher</i> and tried to apply it to an engineering field?
+Just give the compiler a function that tells it "yes" or "no" given a Data instance.
+It's smart enough, we're not in 1970 after all...</p>
+<p>That brings us to our next point.
+How do I propose we decide if types are the same if they're all functions?
+Wasn't I just complaining about non-halting indetermi-whatsits?
+It turns out we've solved that.
+...Well mathematics has, I'll give them that one.
+According to Homotopy Type Theory- ...stay with me now, the Univalence Axiom says we can prove that if two functions are equal... they're equal.
+How marvelous!
+What's even more marvelous, two functions being the same has been a solved problem since 2013 when mathematics worldwide <i>published a book<a href="https://homotopytypetheory.org/book/" target="_blank"><sup>*</sup></a> telling everyone about it.</i>
+You don't need to wait for a function to terminate or not in order to decide if it's the same as another.
+Turns out you can tell most of the time simply by looking at them.
+It's still a mystery to me why nobody in computer science immediately incorporated this...</p>
+<p>So what about the rest of the stuff you need to verify in a Program.
+Turns out that's it.
+If you can make data types defined as arbitrary user-level functions, then you can simply check whatever you'd like.
+This mechanism covers bounds checking, linear types, resource safety, and anything else you need to verify.
+Just write the function to check it.</p>
+<p>Deciding <i>when</i> to check is a simple matter as well.
+If you have an instance in a function scope, it has a type, and that type needs to be checked.
+If you've already checked the type once in that scope, then you know it's legit.
+Conditionals are easy too. 
+If you're in the subroutine for a true condition, then that condition must be true for the whole routine. 
+If you're in the other routine, the condition can't be true.
+There's other stuff like mutability, state, structural typing and whatnot that muddle the details, but this general approach still applies.</p>
+<p>So there it is. 
+None of this is particularly hard.
+It shouldn't be, it doesn't require math.
+Verifying a program <i>shouldn't</i> require math. Ever.
+So stop using mathematics and theory when you don't have to.
+They lied to us.
+We never needed it, we have computers.</p>
+</body>
+<footer>
+  <a href="index.html">&#x1f3e0;</a>
+	<p>Is my writing stupid?<br>Did I make you mad?<br><b><i>Citation needed?!?!</i></b></p>
+	<p>Take a deep breath... Mathematics and computer science are mostly philosophy and drivel.</p>
+  <p>My opinions are my own. At least they're fun to read.</p>
+	<p>This page is Copyright &copy; Daniel Smith, daniel.smith.again@gmail.com</p>
+</footer>
